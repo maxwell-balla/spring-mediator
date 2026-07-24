@@ -1,4 +1,4 @@
-package com.mediator.demo.businesslogics.handlers;
+package com.mediator.demo.businesslogics;
 
 /**
  * Business logic responsible for handling exactly one {@link Request} type.

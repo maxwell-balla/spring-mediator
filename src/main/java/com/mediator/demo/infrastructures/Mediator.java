@@ -1,7 +1,7 @@
-package com.mediator.demo.infrastructures.component;
+package com.mediator.demo.infrastructures;
 
-import com.mediator.demo.businesslogics.handlers.Request;
-import com.mediator.demo.businesslogics.handlers.RequestHandler;
+import com.mediator.demo.businesslogics.Request;
+import com.mediator.demo.businesslogics.RequestHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

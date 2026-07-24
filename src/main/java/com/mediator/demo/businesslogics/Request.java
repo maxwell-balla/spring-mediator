@@ -1,4 +1,4 @@
-package com.mediator.demo.businesslogics.handlers;
+package com.mediator.demo.businesslogics;
 
 /**
  * Marker for a command or query dispatched through the Mediator.

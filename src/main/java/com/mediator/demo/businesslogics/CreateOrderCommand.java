@@ -1,4 +1,4 @@
-package com.mediator.demo.businesslogics.handlers;
+package com.mediator.demo.businesslogics;
 
 public record CreateOrderCommand(
         String product,

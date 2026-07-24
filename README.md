@@ -1,7 +1,7 @@
 # spring-mediator
 
-Démonstration du pattern Mediator (à la MediatR) avec Spring Boot 4, en s'appuyant sur
-l'injection de dépendances de Spring pour router les requêtes vers leur handler.
+Demonstration of the Mediator pattern (MediatR-style) with Spring Boot, using Spring's
+dependency injection to route requests to their handler.
 
 ## Stack
 
@@ -12,22 +12,24 @@ l'injection de dépendances de Spring pour router les requêtes vers leur handle
 
 ## Structure
 
-Le code applicatif est séparé en deux packages sous `com.mediator.demo` :
+Application code is split into two packages under `com.mediator.demo`:
 
 ```
 src/main/java/com/mediator/demo
-├── businesslogics          # logique métier, indépendante du framework web/persistence
-│   ├── handlers             # Request / RequestHandler / commandes / handlers
-│   └── entities              # entités JPA et événements de domaine
-└── infrastructures          # tout ce qui expose ou câble la logique métier
-    ├── component              # le Mediator (routage des requêtes vers les handlers)
-    ├── controller              # contrôleurs REST
-    ├── dto                       # objets d'entrée/sortie HTTP
-    ├── repository              # accès aux données (Spring Data JPA)
-    └── listener                  # écouteurs d'événements Spring
+├── businesslogics          # framework-agnostic business logic
+│   ├── Request               # marker interface for a command/query
+│   ├── RequestHandler         # contract implemented by each handler
+│   ├── CreateOrderCommand      # command carrying the data to handle
+│   ├── CreateOrderHandler       # business logic for CreateOrderCommand
+│   └── Order                      # JPA entity
+└── infrastructures          # everything that exposes or wires the business logic
+    ├── Mediator               # routes requests to their handler
+    ├── OrderController          # REST controller
+    ├── CreateOrderRequest        # HTTP request DTO
+    └── OrderRepository             # Spring Data JPA repository
 ```
 
-## Fonctionnement
+## How it works
 
 ```
 HTTP POST /orders
@@ -38,15 +40,16 @@ mediator.send(CreateOrderCommand)
       │
 CreateOrderHandler
       │
-OrderRepository.save()  ──► publisher.publishEvent(OrderCreatedEvent)
-      │                                │
-  Base H2                      SendEmailListener
+OrderRepository.save()
+      │
+   H2 database
 ```
 
-Le `Mediator` reçoit tous les `RequestHandler` déclarés comme beans Spring, les indexe
-par type de requête, puis délègue chaque `send(...)` au handler correspondant.
+`Mediator` collects every `RequestHandler` bean registered in the Spring context,
+indexes them by the request type they handle, then dispatches each `send(...)` call
+to the matching handler.
 
-## Lancer le projet
+## Running the project
 
 ```bash
 ./mvnw spring-boot:run
@@ -56,10 +59,4 @@ par type de requête, puis délègue chaque `send(...)` au handler correspondant
 curl -X POST http://localhost:8080/orders \
   -H "Content-Type: application/json" \
   -d '{"product":"widget","quantity":3}'
-```
-
-## Tests
-
-```bash
-./mvnw test
 ```

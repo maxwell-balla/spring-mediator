@@ -1,4 +1,4 @@
-package com.mediator.demo.businesslogics.entities;
+package com.mediator.demo.businesslogics;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,8 +1,6 @@
-package com.mediator.demo.infrastructures.controller;
+package com.mediator.demo.infrastructures;
 
-import com.mediator.demo.businesslogics.handlers.CreateOrderCommand;
-import com.mediator.demo.infrastructures.component.Mediator;
-import com.mediator.demo.infrastructures.dto.CreateOrderRequest;
+import com.mediator.demo.businesslogics.CreateOrderCommand;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

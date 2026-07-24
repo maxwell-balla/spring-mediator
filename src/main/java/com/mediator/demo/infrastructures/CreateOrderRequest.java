@@ -1,4 +1,4 @@
-package com.mediator.demo.infrastructures.dto;
+package com.mediator.demo.infrastructures;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
