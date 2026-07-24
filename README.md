@@ -3,6 +3,30 @@
 Demonstration of the Mediator pattern (MediatR-style) with Spring Boot, using Spring's
 dependency injection to route requests to their handler.
 
+## The Mediator pattern
+
+Mediator is one of the 23 classic design patterns catalogued by the "Gang of Four" in
+*Design Patterns: Elements of Reusable Object-Oriented Software* (1994), in the
+behavioral category.
+
+**Problem it solves:** without a mediator, callers (e.g. controllers) end up depending
+directly on every service that can handle their requests, and those services often end
+up calling each other too. As the number of use cases grows, this produces a tangled,
+many-to-many web of dependencies that's hard to test and hard to change — touching one
+handler risks breaking unrelated callers.
+
+**How Mediator fixes it:** every interaction goes through a single intermediary instead
+of talking to collaborators directly. A caller sends a request object to the mediator;
+the mediator looks up the one handler responsible for that request type and delegates
+to it. Callers only ever know about the mediator and the request/response contracts —
+never about concrete handler implementations — which turns the many-to-many web into a
+simple hub-and-spoke: each handler is added or removed independently, without touching
+the controllers that dispatch requests through it.
+
+In this project, [`Mediator`](src/main/java/com/mediator/demo/infrastructures/Mediator.java)
+plays that intermediary role between `OrderController` and `CreateOrderHandler`, the
+same way MediatR does it in the .NET ecosystem.
+
 ## Stack
 
 - Java 25
